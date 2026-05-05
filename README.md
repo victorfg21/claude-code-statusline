@@ -28,7 +28,33 @@ The directory and the repo label are clickable hyperlinks (Ctrl+click).
 - A terminal with ANSI color support (Windows Terminal, iTerm2, Kitty, WezTerm, etc.)
 - **Windows only**: Git for Windows (the installer uses Git Bash to run the script)
 
-## Install
+## Quick install (one-liner)
+
+### Linux / macOS / Git Bash
+
+```bash
+curl -fsSL https://github.com/victorfg21/claude-code-statusline/archive/refs/heads/main.tar.gz \
+  | tar -xz -C /tmp \
+  && bash /tmp/claude-code-statusline-main/install.sh
+```
+
+### Windows (PowerShell)
+
+```powershell
+$tmp = "$env:TEMP\cc-statusline"
+if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
+New-Item -ItemType Directory -Path $tmp | Out-Null
+Invoke-WebRequest "https://github.com/victorfg21/claude-code-statusline/archive/refs/heads/main.zip" -OutFile "$tmp\src.zip"
+Expand-Archive "$tmp\src.zip" $tmp -Force
+& powershell -ExecutionPolicy Bypass -File (Get-ChildItem "$tmp\*\install.ps1").FullName
+```
+
+## Manual install (clone)
+
+```bash
+git clone https://github.com/victorfg21/claude-code-statusline.git
+cd claude-code-statusline
+```
 
 ### Linux / macOS / Git Bash
 
