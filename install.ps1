@@ -58,8 +58,14 @@ console.log("Patched: " + p);
 
 $env:SETTINGS_PATH  = $Settings
 $env:STATUSLINE_CMD = $cmdString
-node -e $nodeScript
-if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+$tmpScript = [System.IO.Path]::GetTempFileName() + ".js"
+[System.IO.File]::WriteAllText($tmpScript, $nodeScript)
+try {
+    node $tmpScript
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+} finally {
+    Remove-Item $tmpScript -ErrorAction SilentlyContinue
+}
 
 Write-Host ""
 Write-Host "Done. Restart Claude Code to load the new status line."
